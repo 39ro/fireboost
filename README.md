@@ -16,7 +16,7 @@ We recommend replicating the operation, where it's possible, in a test project t
 
 ##### Installation:
 ```
-$ npm install --save firestore-admin-utils-js
+$ npm install --save firestore-admin-utils
 ```
 
 Init firestore-admin-utils via:
