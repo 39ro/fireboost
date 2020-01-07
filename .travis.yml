@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "12.13"
+
+branches:
+  only:
+    - master
+
+install:
+  - npm ci
+  - npm install -g firebase-tools
+
+script: npm run test
