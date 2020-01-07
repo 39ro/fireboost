@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "main": "src/helpers.ts",
+  "types": "src/types.d.ts",
   "scripts": {
     "prebuild": "npm run clean",
     "build": "npm run compile",
