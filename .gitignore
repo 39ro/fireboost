@@ -1,1 +1,8 @@
-/node_modules/
+/node_modules
+
+# Editors
+/.idea
+
+# Logs
+*-debug.log
+*-error.log
