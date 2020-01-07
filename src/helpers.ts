@@ -123,7 +123,7 @@ export class CollectionReferenceHelper extends ReferenceHelper<CollectionReferen
 export default class FirestoreAdminUtils {
   ref(r: TestDocumentReference | DocumentReference | TestCollectionReference | CollectionReference): any {
     if (!r) {
-      throw new Error('Collection reference need to be set');
+      throw new Error('Reference need to be set');
     }
     if (this.isDocumentReference(r)) {
       return new DocumentReferenceHelper(r as any);
