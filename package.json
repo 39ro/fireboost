@@ -1,26 +1,38 @@
 {
   "name": "firestore-admin-utils",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
-  "main": "src/rename.ts",
+  "main": "src/helpers.ts",
   "scripts": {
+    "prebuild": "npm run clean",
+    "build": "npm run compile",
+    "compile": "tsc -p .",
+    "check": "gts check",
+    "clean": "gts clean",
+    "fix": "gts fix",
+    "lint": "gts check",
     "test": "firebase emulators:exec --only firestore 'jest'",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "pretest": "npm run compile",
+    "posttest": "npm run check"
   },
   "engines": {
     "node": ">=7.0.0"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "firebase-admin": "^8.9.0"
+  },
   "devDependencies": {
     "@firebase/testing": "^0.16.4",
     "@jest/test-sequencer": "^24.9.0",
     "@types/jest": "^24.0.25",
-    "@types/node": "^10.17.10",
+    "@types/node": "^10.0.3",
+    "gts": "^1.1.2",
     "jest": "^24.9.0",
     "ts-jest": "^24.2.0",
     "ts-node": "^8.5.4",
-    "typescript": "^3.7.4"
+    "typescript": "~3.7.0"
   }
 }

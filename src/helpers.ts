@@ -1,8 +1,7 @@
 import * as admin from 'firebase-admin';
-import {firestore} from 'firebase';
+import { firestore } from 'firebase';
 
 import FieldValue = firestore.FieldValue;
-
 import DocumentReference = admin.firestore.DocumentReference;
 import DocumentSnapshot = admin.firestore.DocumentSnapshot;
 import CollectionReference = admin.firestore.CollectionReference;
@@ -14,7 +13,7 @@ import TestDocumentReference = firestore.DocumentReference;
 class ReferenceHelper<T extends CollectionReference | DocumentReference> {
   readonly reference: T;
 
-  readonly db: any;
+  readonly db: admin.firestore.Firestore;
 
   constructor(ref: T) {
     this.reference = ref;
@@ -22,7 +21,7 @@ class ReferenceHelper<T extends CollectionReference | DocumentReference> {
   }
 }
 
-export class DocumentReferenceHelper extends ReferenceHelper<DocumentReference> {
+class DocumentReferenceHelper extends ReferenceHelper<DocumentReference> {
   /*
    * For the referenced document performs a update operation of the new field key, and then performs, if it exist, a remove operation of the old field key
    *
@@ -33,7 +32,9 @@ export class DocumentReferenceHelper extends ReferenceHelper<DocumentReference> 
    * .ref(colRef)
    * .renameField({oldFieldKey: 'newFieldKey'})
    */
-  async renameField(arg: { [key: string]: string }): Promise<WriteResult | WriteResult[] | null> {
+  async renameField(arg: {
+    [key: string]: string;
+  }): Promise<WriteResult | WriteResult[] | null> {
     if (Object.entries(arg).length <= 0) {
       throw new Error('Rename need arguments');
     }
@@ -43,41 +44,43 @@ export class DocumentReferenceHelper extends ReferenceHelper<DocumentReference> 
     const newNameField = entries[0][1];
 
     const docGet = await this.reference.get();
-    const docData: any = docGet.data();
 
     // doc not exist
     if (!docGet.exists) {
       return null;
     }
+    const docData = docGet.data();
 
-    // New field already exist, old field not exist
-    if (docData[newNameField] && !docData[oldNameField]) {
-      return null;
-    }
+    if (docData) {
+      // New field already exist, old field not exist
+      if (docData[newNameField] && !docData[oldNameField]) {
+        return null;
+      }
 
-    // old field key not exist and new field key not exist
-    if (!docData[newNameField] && !docData[oldNameField]) {
-      return null;
-    }
+      // old field key not exist and new field key not exist
+      if (!docData[newNameField] && !docData[oldNameField]) {
+        return null;
+      }
 
-    // Both old and new fields key exists, delete old field key
-    if (docData[oldNameField] && docData[newNameField]) {
-      return this.reference.update({[oldNameField]: FieldValue.delete()});
-    }
+      // Both old and new fields key exists, delete old field key
+      if (docData[oldNameField] && docData[newNameField]) {
+        return this.reference.update({ [oldNameField]: FieldValue.delete() });
+      }
 
-    // old key exist and new key not exist, update doc with new field key preserving old field value, then delete old field key
-    if (docData[oldNameField] && !docData[newNameField]) {
-      return Promise.all([
-        this.reference.update({[newNameField]: docData[oldNameField]}),
-        this.reference.update({[oldNameField]: FieldValue.delete()})
-      ]);
+      // old key exist and new key not exist, update doc with new field key preserving old field value, then delete old field key
+      if (docData[oldNameField] && !docData[newNameField]) {
+        return Promise.all([
+          this.reference.update({ [newNameField]: docData[oldNameField] }),
+          this.reference.update({ [oldNameField]: FieldValue.delete() }),
+        ]);
+      }
     }
 
     return null;
   }
 }
 
-export class CollectionReferenceHelper extends ReferenceHelper<CollectionReference> {
+class CollectionReferenceHelper extends ReferenceHelper<CollectionReference> {
   /*
    * For each documents in a referenced collection performs a update operation of the new field key, and then performs, if it exist, a remove operation of the old field key
    * If the old field key doesn't exist "rename" does nothing.
@@ -87,9 +90,13 @@ export class CollectionReferenceHelper extends ReferenceHelper<CollectionReferen
    * .ref(colRef)
    * .renameFieldDocs({oldFieldKey: 'newFieldKey'})
    */
-  async renameFieldDocs(arg: { [key: string]: string }): Promise<admin.firestore.WriteResult[][]> {
+  async renameFieldDocs(arg: {
+    [key: string]: string;
+  }): Promise<Array<WriteResult | WriteResult[] | null>> {
     const snapshot = await this.db.collection(this.reference.id).get();
-    const arr = snapshot.docs.map((doc: DocumentSnapshot) => new DocumentReferenceHelper(doc.ref).renameField(arg));
+    const arr = snapshot.docs.map((doc: DocumentSnapshot) =>
+      new DocumentReferenceHelper(doc.ref).renameField(arg)
+    );
     return Promise.all(arr);
   }
 
@@ -99,9 +106,11 @@ export class CollectionReferenceHelper extends ReferenceHelper<CollectionReferen
    * .ref(colRef)
    * .deleteFieldDocs('fieldKeyToDelete')
    */
-  async deleteFieldDocs(fieldKey: string): Promise<admin.firestore.WriteResult[][]> {
+  async deleteFieldDocs(fieldKey: string): Promise<WriteResult[]> {
     const snapshot = await this.db.collection(this.reference.id).get();
-    const arr = snapshot.docs.map((doc: DocumentSnapshot) => doc.ref.update({[fieldKey]: FieldValue.delete()}));
+    const arr = snapshot.docs.map((doc: DocumentSnapshot) =>
+      doc.ref.update({ [fieldKey]: FieldValue.delete() })
+    );
     return Promise.all(arr);
   }
 
@@ -111,34 +120,54 @@ export class CollectionReferenceHelper extends ReferenceHelper<CollectionReferen
    * .ref(colRef)
    * .importDocs({uid: '1'}, {uid: '2', name: 'Giovanni'})
    */
-  importDocs(...args: any[]): Promise<admin.firestore.WriteResult[]> {
+  importDocs<T extends { id?: string }>(...args: T[]): Promise<WriteResult[]> {
     const arr = args.map(docData => {
-      const docId = docData.id ? docData.id : this.db.collection('test').doc().id;
-      return this.db.collection(this.reference.id).doc(docId).set({id: docId, ...docData});
+      const docId = docData.id
+        ? docData.id
+        : this.db.collection('test').doc().id;
+      return this.db
+        .collection(this.reference.id)
+        .doc(docId)
+        .set({ id: docId, ...docData });
     });
     return Promise.all(arr);
   }
 }
 
-export default class FirestoreAdminUtils {
-  ref(r: TestDocumentReference | DocumentReference | TestCollectionReference | CollectionReference): any {
+type T0 = TestCollectionReference | CollectionReference;
+type T1 = TestDocumentReference | DocumentReference;
+
+export class FirestoreAdminUtils {
+  // TestCollectionReference | TestDocumentReference | DocumentReference | CollectionReference
+  ref(ref: TestCollectionReference): CollectionReferenceHelper;
+  ref(ref: TestDocumentReference): DocumentReferenceHelper;
+  ref(ref: DocumentReference): CollectionReferenceHelper;
+  ref(ref: CollectionReference): DocumentReferenceHelper;
+  ref<T extends T0 | T1>(r: T) {
     if (!r) {
       throw new Error('Reference need to be set');
     }
     if (this.isDocumentReference(r)) {
-      return new DocumentReferenceHelper(r as any);
+      return new DocumentReferenceHelper((r as unknown) as DocumentReference);
     }
     if (this.isCollectionReference(r)) {
-      return new CollectionReferenceHelper(r as any);
+      return new CollectionReferenceHelper(
+        (r as unknown) as CollectionReference
+      );
     }
     throw new Error('Something went wrong');
   }
 
-  isDocumentReference(arg: any): boolean {
-    return arg instanceof TestDocumentReference || arg instanceof DocumentReference;
+  isDocumentReference<T>(arg: T): boolean {
+    return (
+      arg instanceof TestDocumentReference || arg instanceof DocumentReference
+    );
   }
 
-  isCollectionReference(arg: any): boolean {
-    return arg instanceof TestCollectionReference || arg instanceof CollectionReference;
+  isCollectionReference<T>(arg: T): boolean {
+    return (
+      arg instanceof TestCollectionReference ||
+      arg instanceof CollectionReference
+    );
   }
 }

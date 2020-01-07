@@ -3,7 +3,8 @@
 </div>
 
 ![npm](https://img.shields.io/npm/v/firestore-utils.svg)
-![NpmLicense](https://img.shields.io/npm/l/firestore-utils.svg)
+![License](https://img.shields.io/github/license/39ro/firestore-admin-utils)
+[![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
 
 <hr>
 
@@ -19,7 +20,7 @@ $ npm install --save firestore-admin-utils-js
 
 Init firestore-admin-utils via:
 ```javascript
-import FirestoreAdminUtils from 'firestore-admin-utils';
+import {FirestoreAdminUtils} from 'firestore-admin-utils';
 const firestoreAdminUtils = new FirestoreAdminUtils();
 ```
 
@@ -66,3 +67,5 @@ _For the referenced document performs a update operation of the new field key, a
 ```javascript
 utilDocRef.renameField({oldFieldKey: 'newFieldKey'})
 ```
+
+[license-url]: https://github.com/prescottprue/fireadmin/blob/master/LICENSE

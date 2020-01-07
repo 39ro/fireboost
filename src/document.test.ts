@@ -1,18 +1,17 @@
 import * as firebase from '@firebase/testing';
-
-import FirestoreAdminUtils from './helpers';
+import { FirestoreAdminUtils } from './helpers';
 
 const firestoreAdminUtils = new FirestoreAdminUtils();
 
 const PROJECT_ID = `firestore-utils-project-${new Date().getTime()}`;
 
-let app: any;
-let db: any;
+let app;
+let db: firebase.firestore.Firestore;
 
 beforeAll(async () => {
   // Init application
   app = firebase.initializeTestApp({
-    projectId: PROJECT_ID
+    projectId: PROJECT_ID,
   });
   db = app.firestore();
 });
@@ -20,7 +19,7 @@ beforeAll(async () => {
 beforeEach(async () => {
   // Clean Firestore Dataset and applications
   await firebase.clearFirestoreData({
-    projectId: 'firestore-utils-project'
+    projectId: 'firestore-utils-project',
   });
 });
 
@@ -36,13 +35,13 @@ test('ref.renameField: doc not exist, does nothing', async () => {
 
   const result = await firestoreAdminUtils
     .ref(doc0)
-    .renameField({nme: 'name'});
+    .renameField({ nme: 'name' });
 
   expect(result).toBe(null);
 });
 
 test('ref.renameField: Both old and new field key NOT exist, does nothing', async () => {
-  const USER = {uid: '1'};
+  const USER = { uid: '1' };
   // set document
   const colRef = db.collection('test_users');
 
@@ -51,7 +50,7 @@ test('ref.renameField: Both old and new field key NOT exist, does nothing', asyn
 
   const result = await firestoreAdminUtils
     .ref(doc0)
-    .renameField({nme: 'name'});
+    .renameField({ nme: 'name' });
 
   const doc0Data = (await doc0.get()).data();
 
@@ -60,7 +59,7 @@ test('ref.renameField: Both old and new field key NOT exist, does nothing', asyn
 });
 
 test('ref.renameField: New field already exist, old field not exist, does nothing', async () => {
-  const USER = {uid: '1', name: 'Giovanni'};
+  const USER = { uid: '1', name: 'Giovanni' };
   // set document
   const colRef = db.collection('test_users');
 
@@ -69,7 +68,7 @@ test('ref.renameField: New field already exist, old field not exist, does nothin
 
   const result = await firestoreAdminUtils
     .ref(doc0)
-    .renameField({nme: 'name'});
+    .renameField({ nme: 'name' });
 
   const doc0Data = (await doc0.get()).data();
 
@@ -78,20 +77,21 @@ test('ref.renameField: New field already exist, old field not exist, does nothin
 });
 
 test('ref.renameField: Both old and new fields key exists, delete old field key', async () => {
-  const USER = {uid: '1', nme: 'Giovanni', name: 'Giovanni'};
-  const USER_EXPECTED = {uid: '1', name: 'Giovanni'};
+  const USER = { uid: '1', nme: 'Giovanni', name: 'Giovanni' };
+  const USER_EXPECTED = { uid: '1', name: 'Giovanni' };
   // set document
   const colRef = db.collection('test_users');
 
   const doc0 = colRef.doc('0');
   await doc0.set(USER);
 
-  await firestoreAdminUtils
-    .ref(doc0)
-    .renameField({nme: 'name'});
+  await firestoreAdminUtils.ref(doc0).renameField({ nme: 'name' });
 
   const doc0Data = (await doc0.get()).data();
 
+  if (!doc0Data) {
+    throw new Error('Doc data not exist');
+  }
   expect(doc0Data.nme).toBe(undefined);
   expect(doc0Data.name).toBe(USER_EXPECTED.name);
   expect(doc0Data.uid).toBe(USER_EXPECTED.uid);
@@ -99,20 +99,21 @@ test('ref.renameField: Both old and new fields key exists, delete old field key'
 });
 
 test('ref.renameField: Old key exist and new key NOT exist, update doc with new field key preserving old field value, then delete old field key', async () => {
-  const USER = {uid: '1', nme: 'Giovanni'};
-  const USER_EXPECTED = {uid: '1', name: 'Giovanni'};
+  const USER = { uid: '1', nme: 'Giovanni' };
+  const USER_EXPECTED = { uid: '1', name: 'Giovanni' };
   // set document
   const colRef = db.collection('test_users');
 
   const doc0 = colRef.doc('0');
   await doc0.set(USER);
 
-  await firestoreAdminUtils
-    .ref(doc0)
-    .renameField({nme: 'name'});
+  await firestoreAdminUtils.ref(doc0).renameField({ nme: 'name' });
 
   const doc0Data = (await doc0.get()).data();
 
+  if (!doc0Data) {
+    throw new Error('Doc data not exist');
+  }
   expect(doc0Data.nme).toBe(undefined);
   expect(doc0Data.name).toBe(USER_EXPECTED.name);
   expect(doc0Data.uid).toBe(USER_EXPECTED.uid);
@@ -120,10 +121,10 @@ test('ref.renameField: Old key exist and new key NOT exist, update doc with new 
 });
 
 test('ref.renameField: Able to rename field in a doc inside a subcollection', async () => {
-  const USER = {uid: '1', nme: 'Giovanni'};
-  const USER_EXPECTED = {uid: '1', name: 'Giovanni'};
-  const PET = {nme: 'dog'};
-  const PET_EXPECTED = {name: 'dog'};
+  const USER = { uid: '1', nme: 'Giovanni' };
+  const USER_EXPECTED = { uid: '1', name: 'Giovanni' };
+  const PET = { nme: 'dog' };
+  const PET_EXPECTED = { name: 'dog' };
 
   const colRef = db.collection('test_users');
   const doc0 = colRef.doc('0');
@@ -137,17 +138,16 @@ test('ref.renameField: Able to rename field in a doc inside a subcollection', as
   // set document to subcollection
   await subColDoc0.set(PET);
 
-  await firestoreAdminUtils
-    .ref(doc0)
-    .renameField({nme: 'name'});
+  await firestoreAdminUtils.ref(doc0).renameField({ nme: 'name' });
 
-  await firestoreAdminUtils
-    .ref(subColDoc0)
-    .renameField({nme: 'name'});
+  await firestoreAdminUtils.ref(subColDoc0).renameField({ nme: 'name' });
 
   const doc0Data = (await doc0.get()).data();
   const subColDoc0Data = (await subColDoc0.get()).data();
 
+  if (!doc0Data || !subColDoc0Data) {
+    throw new Error('Doc data not exist');
+  }
   expect(doc0Data.nme).toBe(undefined);
   expect(doc0Data.name).toBe(USER_EXPECTED.name);
   expect(doc0Data.uid).toBe(USER_EXPECTED.uid);

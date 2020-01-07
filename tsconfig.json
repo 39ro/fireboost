@@ -1,21 +1,18 @@
 {
+  "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
-    "declaration": true,
-    "importHelpers": true,
-    "module": "commonjs",
-    "outDir": "lib",
     "rootDir": "src",
-    "strict": true,
-    "target": "es2017",
-    "typeRoots": [
-      "node_modules/@types"
+    "outDir": "dist",
+    "lib": [
+      "es2016",
+      "dom"
     ],
-    "types": [
-      "jest"
-    ]
+    "traceResolution": false
   },
   "include": [
-    "src/**/*",
-    "setup-test.ts"
+    "src"
   ]
+//  "exclude": [
+//    "**/*.test.ts"
+//  ]
 }

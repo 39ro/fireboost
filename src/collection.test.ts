@@ -1,17 +1,17 @@
 import * as firebase from '@firebase/testing';
-import FirestoreAdminUtils from './helpers';
+import { FirestoreAdminUtils } from './helpers';
 
 const firestoreAdminUtils = new FirestoreAdminUtils();
 
 const PROJECT_ID = `firestore-utils-project-${new Date().getTime()}`;
 
-let app: any;
-let db: any;
+let app;
+let db: firebase.firestore.Firestore;
 
 beforeAll(async () => {
   // Init application
   app = firebase.initializeTestApp({
-    projectId: PROJECT_ID
+    projectId: PROJECT_ID,
   });
   db = app.firestore();
 });
@@ -19,7 +19,7 @@ beforeAll(async () => {
 beforeEach(async () => {
   // Clean Firestore Dataset and applications
   await firebase.clearFirestoreData({
-    projectId: 'firestore-utils-project'
+    projectId: 'firestore-utils-project',
   });
 });
 
@@ -28,8 +28,14 @@ afterAll(async () => {
 });
 
 test('ref.renameFieldDocs', async () => {
-  const USERS = [{uid: 'a', nme: 'Giovanni'}, {uid: 'b', name: 'Giovanni'}];
-  const USERS_EXPECTED = [{uid: 'a', name: 'Giovanni'}, {uid: 'b', name: 'Giovanni'}];
+  const USERS = [
+    { uid: 'a', nme: 'Giovanni' },
+    { uid: 'b', name: 'Giovanni' },
+  ];
+  const USERS_EXPECTED = [
+    { uid: 'a', name: 'Giovanni' },
+    { uid: 'b', name: 'Giovanni' },
+  ];
   // set document
   const colRef = db.collection('test_users');
 
@@ -39,9 +45,7 @@ test('ref.renameFieldDocs', async () => {
   await doc0.set(USERS[0]);
   await doc1.set(USERS[1]);
 
-  await firestoreAdminUtils
-    .ref(colRef)
-    .renameFieldDocs({nme: 'name'});
+  await firestoreAdminUtils.ref(colRef).renameFieldDocs({ nme: 'name' });
 
   const doc0Data = await doc0.get();
   const doc1Data = await doc1.get();
@@ -52,8 +56,11 @@ test('ref.renameFieldDocs', async () => {
 });
 
 test('ref.deleteFieldDocs', async () => {
-  const USERS = [{uid: 'a', nme: 'Giovanni'}, {uid: 'b', nme: 'Giovanni'}];
-  const USERS_EXPECTED = [{uid: 'a'}, {uid: 'b'}];
+  const USERS = [
+    { uid: 'a', nme: 'Giovanni' },
+    { uid: 'b', nme: 'Giovanni' },
+  ];
+  const USERS_EXPECTED = [{ uid: 'a' }, { uid: 'b' }];
   // set document
   const colRef = db.collection('test_users');
 
@@ -63,16 +70,17 @@ test('ref.deleteFieldDocs', async () => {
   await doc0.set(USERS[0]);
   await doc1.set(USERS[1]);
 
-  await firestoreAdminUtils
-    .ref(colRef)
-    .deleteFieldDocs('nme');
+  await firestoreAdminUtils.ref(colRef).deleteFieldDocs('nme');
 
-  const doc0Data = await doc0.get();
-  const doc1Data = await doc1.get();
+  const doc0Data = (await doc0.get()).data();
+  const doc1Data = (await doc1.get()).data();
 
+  if (!doc0Data || !doc1Data) {
+    throw new Error('Doc data not exist');
+  }
   // value should be the same in both documents
-  expect(doc0Data.data().name).toBe(undefined);
-  expect(doc1Data.data().name).toBe(undefined);
-  expect(JSON.stringify(doc0Data.data())).toBe(JSON.stringify(USERS_EXPECTED[0]));
-  expect(JSON.stringify(doc1Data.data())).toBe(JSON.stringify(USERS_EXPECTED[1]));
+  expect(doc0Data.name).toBe(undefined);
+  expect(doc1Data.name).toBe(undefined);
+  expect(JSON.stringify(doc0Data)).toBe(JSON.stringify(USERS_EXPECTED[0]));
+  expect(JSON.stringify(doc1Data)).toBe(JSON.stringify(USERS_EXPECTED[1]));
 });
