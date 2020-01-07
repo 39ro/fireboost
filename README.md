@@ -2,7 +2,7 @@
   <h1>Firestore Utils JS</h1>
 </div>
 
-![npm](https://img.shields.io/npm/v/firestore-utils.svg)
+![npm](https://img.shields.io/npm/v/firestore-admin-utils.svg)
 ![License](https://img.shields.io/github/license/39ro/firestore-admin-utils)
 ![Travis](https://img.shields.io/travis/39ro/firestore-admin-utils)
 [![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)

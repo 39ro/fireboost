@@ -10,9 +10,7 @@ let db: firebase.firestore.Firestore;
 
 beforeAll(async () => {
   // Init application
-  app = firebase.initializeTestApp({
-    projectId: PROJECT_ID,
-  });
+  app = firebase.initializeTestApp({ projectId: PROJECT_ID });
   db = app.firestore();
 });
 

@@ -7,22 +7,21 @@
   "bugs": {
     "url": "https://github.com/39ro/firestore-admin-utils/issues"
   },
-  "main": "./dist/helpers.ts",
-  "types": "./dist/helpers.d.ts",
+  "main": "./helpers.js",
+  "types": "./helpers.d.js",
   "scripts": {
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "prebuild": "npm run clean",
-    "build": "npm run compile",
-    "compile": "tsc -p .",
-    "check": "gts check",
-    "clean": "gts clean",
-    "fix": "gts fix",
-    "lint": "gts check",
+    "postbuild": "cp package.json LICENSE README.md build",
+    "build": "tsc -p .",
+    "clean": "rimraf build && echo 'Cleaning build folder'",
+    "fix": "gts fix src/**",
+    "lint": "gts check src/**",
     "test": "firebase emulators:exec --only firestore 'jest'",
     "test:watch": "jest --watch",
-    "pretest": "npm run compile",
+    "pretest": "npm run build",
     "posttest": "npm run check"
   },
   "engines": {
