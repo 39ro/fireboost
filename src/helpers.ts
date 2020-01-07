@@ -138,7 +138,6 @@ type T0 = TestCollectionReference | CollectionReference;
 type T1 = TestDocumentReference | DocumentReference;
 
 export class FirestoreAdminUtils {
-  // TestCollectionReference | TestDocumentReference | DocumentReference | CollectionReference
   ref(ref: TestCollectionReference): CollectionReferenceHelper;
   ref(ref: TestDocumentReference): DocumentReferenceHelper;
   ref(ref: DocumentReference): CollectionReferenceHelper;
@@ -148,12 +147,10 @@ export class FirestoreAdminUtils {
       throw new Error('Reference need to be set');
     }
     if (this.isDocumentReference(r)) {
-      return new DocumentReferenceHelper((r as unknown) as DocumentReference);
+      return new DocumentReferenceHelper(r as DocumentReference);
     }
     if (this.isCollectionReference(r)) {
-      return new CollectionReferenceHelper(
-        (r as unknown) as CollectionReference
-      );
+      return new CollectionReferenceHelper(r as CollectionReference);
     }
     throw new Error('Something went wrong');
   }

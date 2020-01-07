@@ -2,9 +2,17 @@
   "name": "firestore-admin-utils",
   "version": "0.1.0",
   "description": "",
-  "main": "src/helpers.ts",
-  "types": "src/types.d.ts",
+  "license": "MIT",
+  "author": "39ro <giovanni@apitech.agency>",
+  "bugs": {
+    "url": "https://github.com/39ro/firestore-admin-utils/issues"
+  },
+  "main": "./dist/helpers.ts",
+  "types": "./dist/helpers.d.ts",
   "scripts": {
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
     "prebuild": "npm run clean",
     "build": "npm run compile",
     "compile": "tsc -p .",
@@ -20,8 +28,11 @@
   "engines": {
     "node": ">=8.0.0"
   },
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "firestore",
+    "nodejs",
+    "utils"
+  ],
   "dependencies": {
     "firebase-admin": "^8.9.0"
   },
