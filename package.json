@@ -21,9 +21,7 @@
     "fix": "gts fix src/**",
     "lint": "gts check src/**",
     "test": "firebase emulators:exec --only firestore 'jest'",
-    "test:watch": "jest --watch",
-    "publish": "npm publish",
-    "pack": "npm pack"
+    "test:watch": "jest --watch"
   },
   "engines": {
     "node": ">=8.0.0"
