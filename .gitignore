@@ -1,8 +1,8 @@
-/node_modules
-/build
+node_modules
+lib
 
 # Editors
-/.idea
+.idea
 
 # Logs
 *-debug.log
