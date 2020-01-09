@@ -1,18 +1,24 @@
 import * as firebaseTesting from '@firebase/testing';
-import { firestore } from 'firebase';
+import { firestore } from 'firebase-admin';
 
-import FieldValue = firestore.FieldValue;
-import DocumentReference = firestore.DocumentReference;
-import DocumentSnapshot = firestore.DocumentSnapshot;
-import CollectionReference = firestore.CollectionReference;
+import {
+  Firestore,
+  DocumentReference,
+  DocumentSnapshot,
+  CollectionReference,
+  WriteResult,
+} from '@google-cloud/firestore';
 
 import TestCollectionReference = firebaseTesting.firestore.CollectionReference;
 import TestDocumentReference = firebaseTesting.firestore.DocumentReference;
 
+// Get the `FieldValue` object
+export let FieldValue = firestore.FieldValue;
+
 class ReferenceHelper<T extends CollectionReference | DocumentReference> {
   readonly reference: T;
 
-  readonly db: firestore.Firestore;
+  readonly db: Firestore;
 
   constructor(ref: T) {
     this.reference = ref;
@@ -35,7 +41,7 @@ export class DocumentReferenceHelper extends ReferenceHelper<
    */
   async renameField(arg: {
     [key: string]: string;
-  }): Promise<void | void[] | null> {
+  }): Promise<WriteResult | WriteResult[] | null> {
     if (Object.entries(arg).length <= 0) {
       throw new Error('Rename need arguments');
     }
@@ -95,7 +101,7 @@ export class CollectionReferenceHelper extends ReferenceHelper<
    */
   async renameFieldDocs(arg: {
     [key: string]: string;
-  }): Promise<Array<void | void[] | null>> {
+  }): Promise<Array<WriteResult | WriteResult[] | null>> {
     const snapshot = await this.db.collection(this.reference.id).get();
     const arr = snapshot.docs.map((doc: DocumentSnapshot) =>
       new DocumentReferenceHelper(doc.ref).renameField(arg)
@@ -109,7 +115,7 @@ export class CollectionReferenceHelper extends ReferenceHelper<
    * .ref(colRef)
    * .deleteFieldDocs('fieldKeyToDelete')
    */
-  async deleteFieldDocs(fieldKey: string): Promise<void[]> {
+  async deleteFieldDocs(fieldKey: string): Promise<WriteResult[]> {
     const snapshot = await this.db.collection(this.reference.id).get();
     const arr = snapshot.docs.map((doc: DocumentSnapshot) =>
       doc.ref.update({ [fieldKey]: FieldValue.delete() })
@@ -123,7 +129,7 @@ export class CollectionReferenceHelper extends ReferenceHelper<
    * .ref(colRef)
    * .importDocs({uid: '1'}, {uid: '2', name: 'Giovanni'})
    */
-  importDocs<T extends { id?: string }>(...args: T[]): Promise<void[]> {
+  importDocs<T extends { id?: string }>(...args: T[]): Promise<WriteResult[]> {
     const arr = args.map(docData => {
       const docId = docData.id
         ? docData.id

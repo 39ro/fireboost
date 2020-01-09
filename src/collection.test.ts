@@ -3,6 +3,14 @@ import { FirestoreAdminUtils } from './helpers';
 
 const adminUtilsFirestore = new FirestoreAdminUtils();
 
+jest.mock('firebase-admin', () => {
+  return {
+    firestore: {
+      FieldValue: firebaseTesting.firestore.FieldValue,
+    },
+  };
+});
+
 const PROJECT_ID = `firestore-utils-project-${new Date().getTime()}`;
 
 let app;
