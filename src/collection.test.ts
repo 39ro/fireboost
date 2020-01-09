@@ -1,4 +1,4 @@
-import * as firebase from '@firebase/testing';
+import * as firebaseTesting from '@firebase/testing';
 import { FirestoreAdminUtils } from './helpers';
 
 const adminUtilsFirestore = new FirestoreAdminUtils();
@@ -6,23 +6,25 @@ const adminUtilsFirestore = new FirestoreAdminUtils();
 const PROJECT_ID = `firestore-utils-project-${new Date().getTime()}`;
 
 let app;
-let db: firebase.firestore.Firestore;
+let db: firebaseTesting.firestore.Firestore;
 
 beforeAll(async () => {
   // Init application
-  app = firebase.initializeTestApp({ projectId: PROJECT_ID });
+  app = firebaseTesting.initializeTestApp({
+    projectId: PROJECT_ID,
+  });
   db = app.firestore();
 });
 
 beforeEach(async () => {
   // Clean Firestore Dataset and applications
-  await firebase.clearFirestoreData({
+  await firebaseTesting.clearFirestoreData({
     projectId: 'firestore-utils-project',
   });
 });
 
 afterAll(async () => {
-  await firebase.apps().map(app => app.delete());
+  await firebaseTesting.apps().map(app => app.delete());
 });
 
 test('ref.renameFieldDocs', async () => {

@@ -1,19 +1,18 @@
-import * as admin from 'firebase-admin';
+import * as firebaseTesting from '@firebase/testing';
 import { firestore } from 'firebase';
 
 import FieldValue = firestore.FieldValue;
-import DocumentReference = admin.firestore.DocumentReference;
-import DocumentSnapshot = admin.firestore.DocumentSnapshot;
-import CollectionReference = admin.firestore.CollectionReference;
-import WriteResult = admin.firestore.WriteResult;
+import DocumentReference = firestore.DocumentReference;
+import DocumentSnapshot = firestore.DocumentSnapshot;
+import CollectionReference = firestore.CollectionReference;
 
-import TestCollectionReference = firestore.CollectionReference;
-import TestDocumentReference = firestore.DocumentReference;
+import TestCollectionReference = firebaseTesting.firestore.CollectionReference;
+import TestDocumentReference = firebaseTesting.firestore.DocumentReference;
 
 class ReferenceHelper<T extends CollectionReference | DocumentReference> {
   readonly reference: T;
 
-  readonly db: admin.firestore.Firestore;
+  readonly db: firestore.Firestore;
 
   constructor(ref: T) {
     this.reference = ref;
@@ -21,7 +20,9 @@ class ReferenceHelper<T extends CollectionReference | DocumentReference> {
   }
 }
 
-class DocumentReferenceHelper extends ReferenceHelper<DocumentReference> {
+export class DocumentReferenceHelper extends ReferenceHelper<
+  DocumentReference
+> {
   /*
    * For the referenced document performs a update operation of the new field key, and then performs, if it exist, a remove operation of the old field key
    *
@@ -34,7 +35,7 @@ class DocumentReferenceHelper extends ReferenceHelper<DocumentReference> {
    */
   async renameField(arg: {
     [key: string]: string;
-  }): Promise<WriteResult | WriteResult[] | null> {
+  }): Promise<void | void[] | null> {
     if (Object.entries(arg).length <= 0) {
       throw new Error('Rename need arguments');
     }
@@ -80,7 +81,9 @@ class DocumentReferenceHelper extends ReferenceHelper<DocumentReference> {
   }
 }
 
-class CollectionReferenceHelper extends ReferenceHelper<CollectionReference> {
+export class CollectionReferenceHelper extends ReferenceHelper<
+  CollectionReference
+> {
   /*
    * For each documents in a referenced collection performs a update operation of the new field key, and then performs, if it exist, a remove operation of the old field key
    * If the old field key doesn't exist "rename" does nothing.
@@ -92,7 +95,7 @@ class CollectionReferenceHelper extends ReferenceHelper<CollectionReference> {
    */
   async renameFieldDocs(arg: {
     [key: string]: string;
-  }): Promise<Array<WriteResult | WriteResult[] | null>> {
+  }): Promise<Array<void | void[] | null>> {
     const snapshot = await this.db.collection(this.reference.id).get();
     const arr = snapshot.docs.map((doc: DocumentSnapshot) =>
       new DocumentReferenceHelper(doc.ref).renameField(arg)
@@ -106,7 +109,7 @@ class CollectionReferenceHelper extends ReferenceHelper<CollectionReference> {
    * .ref(colRef)
    * .deleteFieldDocs('fieldKeyToDelete')
    */
-  async deleteFieldDocs(fieldKey: string): Promise<WriteResult[]> {
+  async deleteFieldDocs(fieldKey: string): Promise<void[]> {
     const snapshot = await this.db.collection(this.reference.id).get();
     const arr = snapshot.docs.map((doc: DocumentSnapshot) =>
       doc.ref.update({ [fieldKey]: FieldValue.delete() })
@@ -120,7 +123,7 @@ class CollectionReferenceHelper extends ReferenceHelper<CollectionReference> {
    * .ref(colRef)
    * .importDocs({uid: '1'}, {uid: '2', name: 'Giovanni'})
    */
-  importDocs<T extends { id?: string }>(...args: T[]): Promise<WriteResult[]> {
+  importDocs<T extends { id?: string }>(...args: T[]): Promise<void[]> {
     const arr = args.map(docData => {
       const docId = docData.id
         ? docData.id
@@ -138,10 +141,10 @@ type T0 = TestCollectionReference | CollectionReference;
 type T1 = TestDocumentReference | DocumentReference;
 
 export class FirestoreAdminUtils {
-  ref(ref: TestCollectionReference): CollectionReferenceHelper;
-  ref(ref: TestDocumentReference): DocumentReferenceHelper;
-  ref(ref: DocumentReference): CollectionReferenceHelper;
-  ref(ref: CollectionReference): DocumentReferenceHelper;
+  ref(r: TestCollectionReference): CollectionReferenceHelper;
+  ref(r: TestDocumentReference): DocumentReferenceHelper;
+  ref(r: DocumentReference): CollectionReferenceHelper;
+  ref(r: CollectionReference): DocumentReferenceHelper;
   ref<T extends T0 | T1>(r: T) {
     if (!r) {
       throw new Error('Reference need to be set');
