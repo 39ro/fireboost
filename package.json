@@ -1,6 +1,6 @@
 {
   "name": "admin-utils-firestore",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "license": "MIT",
   "author": "39ro <giovanni@apitech.agency>",
@@ -8,7 +8,7 @@
     "url": "https://github.com/39ro/admin-utils-firestore/issues"
   },
   "main": "./lib/helpers.js",
-  "types": "./lib/helpers.d.js",
+  "types": "./lib/helpers.d.ts",
   "scripts": {
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
