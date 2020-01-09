@@ -1,7 +1,7 @@
 import * as firebase from '@firebase/testing';
 import { FirestoreAdminUtils } from './helpers';
 
-const firestoreAdminUtils = new FirestoreAdminUtils();
+const adminUtilsFirestore = new FirestoreAdminUtils();
 
 const PROJECT_ID = `firestore-utils-project-${new Date().getTime()}`;
 
@@ -43,7 +43,7 @@ test('ref.renameFieldDocs', async () => {
   await doc0.set(USERS[0]);
   await doc1.set(USERS[1]);
 
-  await firestoreAdminUtils.ref(colRef).renameFieldDocs({ nme: 'name' });
+  await adminUtilsFirestore.ref(colRef).renameFieldDocs({ nme: 'name' });
 
   const doc0Data = await doc0.get();
   const doc1Data = await doc1.get();
@@ -68,7 +68,7 @@ test('ref.deleteFieldDocs', async () => {
   await doc0.set(USERS[0]);
   await doc1.set(USERS[1]);
 
-  await firestoreAdminUtils.ref(colRef).deleteFieldDocs('nme');
+  await adminUtilsFirestore.ref(colRef).deleteFieldDocs('nme');
 
   const doc0Data = (await doc0.get()).data();
   const doc1Data = (await doc1.get()).data();

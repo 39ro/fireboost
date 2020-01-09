@@ -1,5 +1,5 @@
 {
-  "name": "firestore-admin-utils",
+  "name": "admin-utils-firestore",
   "version": "0.1.0",
   "description": "",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "url": "https://github.com/39ro/firestore-admin-utils/issues"
   },
   "main": "./lib/helpers.js",
-  "types": "./lib/helpers.d.ts",
+  "types": "./lib/helpers.d.js",
   "scripts": {
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
@@ -17,7 +17,7 @@
     "pretest": "npm run build",
     "posttest": "npm run lint",
     "build": "tsc -p .",
-    "clean": "gts clean",
+    "clean": "rimraf lib && echo 'Cleaning build folder'",
     "fix": "gts fix src/**",
     "lint": "gts check src/**",
     "test": "firebase emulators:exec --only firestore 'jest'",
@@ -31,6 +31,7 @@
   "keywords": [
     "firestore",
     "nodejs",
+    "typescript",
     "utils"
   ],
   "dependencies": {

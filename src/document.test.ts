@@ -1,7 +1,7 @@
 import * as firebase from '@firebase/testing';
 import { FirestoreAdminUtils } from './helpers';
 
-const firestoreAdminUtils = new FirestoreAdminUtils();
+const adminUtilsFirestore = new FirestoreAdminUtils();
 
 const PROJECT_ID = `firestore-utils-project-${new Date().getTime()}`;
 
@@ -33,7 +33,7 @@ test('ref.renameField: doc not exist, does nothing', async () => {
 
   const doc0 = colRef.doc('0');
 
-  const result = await firestoreAdminUtils
+  const result = await adminUtilsFirestore
     .ref(doc0)
     .renameField({ nme: 'name' });
 
@@ -48,7 +48,7 @@ test('ref.renameField: Both old and new field key NOT exist, does nothing', asyn
   const doc0 = colRef.doc('0');
   await doc0.set(USER);
 
-  const result = await firestoreAdminUtils
+  const result = await adminUtilsFirestore
     .ref(doc0)
     .renameField({ nme: 'name' });
 
@@ -66,7 +66,7 @@ test('ref.renameField: New field already exist, old field not exist, does nothin
   const doc0 = colRef.doc('0');
   await doc0.set(USER);
 
-  const result = await firestoreAdminUtils
+  const result = await adminUtilsFirestore
     .ref(doc0)
     .renameField({ nme: 'name' });
 
@@ -85,7 +85,7 @@ test('ref.renameField: Both old and new fields key exists, delete old field key'
   const doc0 = colRef.doc('0');
   await doc0.set(USER);
 
-  await firestoreAdminUtils.ref(doc0).renameField({ nme: 'name' });
+  await adminUtilsFirestore.ref(doc0).renameField({ nme: 'name' });
 
   const doc0Data = (await doc0.get()).data();
 
@@ -107,7 +107,7 @@ test('ref.renameField: Old key exist and new key NOT exist, update doc with new 
   const doc0 = colRef.doc('0');
   await doc0.set(USER);
 
-  await firestoreAdminUtils.ref(doc0).renameField({ nme: 'name' });
+  await adminUtilsFirestore.ref(doc0).renameField({ nme: 'name' });
 
   const doc0Data = (await doc0.get()).data();
 
@@ -138,9 +138,9 @@ test('ref.renameField: Able to rename field in a doc inside a subcollection', as
   // set document to subcollection
   await subColDoc0.set(PET);
 
-  await firestoreAdminUtils.ref(doc0).renameField({ nme: 'name' });
+  await adminUtilsFirestore.ref(doc0).renameField({ nme: 'name' });
 
-  await firestoreAdminUtils.ref(subColDoc0).renameField({ nme: 'name' });
+  await adminUtilsFirestore.ref(subColDoc0).renameField({ nme: 'name' });
 
   const doc0Data = (await doc0.get()).data();
   const subColDoc0Data = (await subColDoc0.get()).data();

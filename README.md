@@ -1,10 +1,10 @@
 <div align="center">
-  <h1>Firestore Utils JS</h1>
+  <h1>Admin Utils Firestore</h1>
 </div>
 
-![npm](https://img.shields.io/npm/v/firestore-admin-utils.svg)
-![License](https://img.shields.io/github/license/39ro/firestore-admin-utils)
-![Travis](https://img.shields.io/travis/39ro/firestore-admin-utils)
+![npm](https://img.shields.io/npm/v/admin-utils-firestore.svg)
+![License](https://img.shields.io/github/license/39ro/admin-utils-firestore)
+![Travis](https://img.shields.io/travis/39ro/admin-utils-firestore)
 [![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
 
 <hr>
@@ -16,13 +16,13 @@ We recommend replicating the operation, where it's possible, in a test project t
 
 ##### Installation:
 ```
-$ npm install --save firestore-admin-utils
+$ npm install --save admin-utils-firestore
 ```
 
-Init firestore-admin-utils via:
+Init admin-utils-firestore via:
 ```javascript
-import {FirestoreAdminUtils} from 'firestore-admin-utils';
-const firestoreAdminUtils = new FirestoreAdminUtils();
+import {FirestoreAdminUtils} from 'admin-utils-firestore';
+const adminUtilsFirestore = new FirestoreAdminUtils();
 ```
 
 
@@ -30,7 +30,7 @@ const firestoreAdminUtils = new FirestoreAdminUtils();
 Target a firestore collection reference via:
 ```javascript
 const colRef = db.collection('test');
-const utilColRef = firestoreAdminUtils.ref(colRef);
+const utilColRef = adminUtilsFirestore.ref(colRef);
 ```
 
 ###### API
@@ -58,7 +58,7 @@ utilColRef.renameFieldDocs({oldFieldKey: 'newFieldKey'})
 Target a firestore document reference via:
 ```javascript
 const docRef = db.collection('users').doc('xyz');
-const utilDocRef = firestoreAdminUtils.ref(docRef);
+const utilDocRef = adminUtilsFirestore.ref(docRef);
 ```
 
 ###### API
