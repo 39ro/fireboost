@@ -5,7 +5,7 @@
   "license": "MIT",
   "author": "39ro <giovanni@apitech.agency>",
   "bugs": {
-    "url": "https://github.com/39ro/firestore-admin-utils/issues"
+    "url": "https://github.com/39ro/admin-utils-firestore/issues"
   },
   "main": "./lib/helpers.js",
   "types": "./lib/helpers.d.js",

@@ -3,10 +3,9 @@
 </div>
 
 ![npm](https://img.shields.io/npm/v/admin-utils-firestore.svg)
-![License](https://img.shields.io/github/license/39ro/admin-utils-firestore)
 ![Travis](https://img.shields.io/travis/39ro/admin-utils-firestore)
+![License](https://img.shields.io/github/license/39ro/admin-utils-firestore)
 [![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
-
 <hr>
 
 
