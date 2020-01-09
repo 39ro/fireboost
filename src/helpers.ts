@@ -13,7 +13,7 @@ import TestCollectionReference = firebaseTesting.firestore.CollectionReference;
 import TestDocumentReference = firebaseTesting.firestore.DocumentReference;
 
 // Get the `FieldValue` object
-export let FieldValue = firestore.FieldValue;
+import FieldValue = firestore.FieldValue;
 
 class ReferenceHelper<T extends CollectionReference | DocumentReference> {
   readonly reference: T;
