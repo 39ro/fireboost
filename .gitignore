@@ -1,5 +1,9 @@
-node_modules
+# Build
 lib
+*.tgz
+
+# Node
+node_modules
 
 # Editors
 .idea

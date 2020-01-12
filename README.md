@@ -9,21 +9,25 @@
 
 <hr>
 
-Unofficial library Utils class for Firestore (https://firebase.google.com/docs/firestore)
-<br>
-We recommend replicating the operation, where it's possible, in a test project to avoid accidental data compromises and check if the output is what expected before to run any operation in a production environment.
+Helpers used for common admin task on Firestore databases.
 
-##### Installation:
+
+### Installation:
+
+- Install the package via:
 ```
 $ npm install --save admin-utils-firestore
 ```
 
-Init admin-utils-firestore via:
+- Init admin-utils-firestore via:
 ```javascript
 import {FirestoreAdminUtils} from 'admin-utils-firestore';
 const adminUtilsFirestore = new FirestoreAdminUtils();
 ```
 
+<hr>
+
+### Documentation:
 
 ##### Collections
 Target a firestore collection reference via:
@@ -68,4 +72,13 @@ _For the referenced document performs a update operation of the new field key, a
 utilDocRef.renameField({oldFieldKey: 'newFieldKey'})
 ```
 
-[license-url]: https://github.com/prescottprue/fireadmin/blob/master/LICENSE
+
+<br>
+
+
+### Just a reminder
+This in a unofficial library for Firestore (https://firebase.google.com/docs/firestore) we recommend replicating the operation, where it's possible, in a test project to check if the output is what expected before to run any operation in a production environment.
+Thanks for using and testing this library!
+
+### Contributing
+For bugs and feature requests please [Create an Issue](https://github.com/39ro/admin-utils-firestore/issues/new).
