@@ -10,6 +10,7 @@
     "traceResolution": false
   },
   "exclude": [
-    "src/*.test.**"
+    "src/*.test.**",
+    "src/helpers-test.ts"
   ]
 }

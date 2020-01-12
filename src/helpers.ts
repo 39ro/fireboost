@@ -1,4 +1,3 @@
-import * as firebaseTesting from '@firebase/testing';
 import { firestore } from 'firebase-admin';
 
 import {
@@ -8,9 +7,6 @@ import {
   CollectionReference,
   WriteResult,
 } from '@google-cloud/firestore';
-
-import TestCollectionReference = firebaseTesting.firestore.CollectionReference;
-import TestDocumentReference = firebaseTesting.firestore.DocumentReference;
 
 // Get the `FieldValue` object
 import FieldValue = firestore.FieldValue;
@@ -143,15 +139,10 @@ export class CollectionReferenceHelper extends ReferenceHelper<
   }
 }
 
-type T0 = TestCollectionReference | CollectionReference;
-type T1 = TestDocumentReference | DocumentReference;
-
 export class FirestoreAdminUtils {
-  ref(r: TestCollectionReference): CollectionReferenceHelper;
-  ref(r: TestDocumentReference): DocumentReferenceHelper;
   ref(r: DocumentReference): CollectionReferenceHelper;
   ref(r: CollectionReference): DocumentReferenceHelper;
-  ref<T extends T0 | T1>(r: T) {
+  ref<T extends CollectionReference | DocumentReference>(r: T) {
     if (!r) {
       throw new Error('Reference need to be set');
     }
@@ -165,15 +156,10 @@ export class FirestoreAdminUtils {
   }
 
   isDocumentReference<T>(arg: T): boolean {
-    return (
-      arg instanceof TestDocumentReference || arg instanceof DocumentReference
-    );
+    return arg instanceof DocumentReference;
   }
 
   isCollectionReference<T>(arg: T): boolean {
-    return (
-      arg instanceof TestCollectionReference ||
-      arg instanceof CollectionReference
-    );
+    return arg instanceof CollectionReference;
   }
 }

@@ -1,7 +1,7 @@
 import * as firebaseTesting from '@firebase/testing';
-import { FirestoreAdminUtils } from './helpers';
+import { TestFirestoreAdminUtils } from './helpers-test';
 
-const adminUtilsFirestore = new FirestoreAdminUtils();
+const adminUtilsFirestore = new TestFirestoreAdminUtils();
 
 jest.mock('firebase-admin', () => {
   return {
