@@ -1,6 +1,6 @@
 {
   "name": "admin-utils-firestore",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Unofficial library Node.js Utils class for Firestore (https://firebase.google.com/docs/firestore)",
   "license": "MIT",
   "author": "39ro <giovanni@apitech.agency>",
