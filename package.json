@@ -4,6 +4,7 @@
   "description": "Unofficial library Node.js Utils class for Firestore (https://firebase.google.com/docs/firestore)",
   "license": "MIT",
   "author": "39ro <giovanni@apitech.agency>",
+  "repository": "github:39ro/admin-utils-firestore",
   "bugs": {
     "url": "https://github.com/39ro/admin-utils-firestore/issues"
   },

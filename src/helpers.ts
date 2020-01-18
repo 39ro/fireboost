@@ -127,9 +127,7 @@ export class CollectionReferenceHelper extends ReferenceHelper<
    */
   importDocs<T extends { id?: string }>(...args: T[]): Promise<WriteResult[]> {
     const arr = args.map(docData => {
-      const docId = docData.id
-        ? docData.id
-        : this.db.collection('test').doc().id;
+      const docId = docData.id ? docData.id : this.reference.doc().id;
       return this.db
         .collection(this.reference.id)
         .doc(docId)
