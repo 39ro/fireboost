@@ -16,8 +16,8 @@ import TestDocumentReference = firebaseTesting.firestore.DocumentReference;
 export class TestFirestoreAdminUtils extends FirestoreAdminUtils {
   ref(r: TestDocumentReference): DocumentReferenceHelper;
   ref(r: TestCollectionReference): CollectionReferenceHelper;
-  ref(r: DocumentReference): CollectionReferenceHelper;
-  ref(r: CollectionReference): DocumentReferenceHelper;
+  ref(r: DocumentReference): DocumentReferenceHelper;
+  ref(r: CollectionReference): CollectionReferenceHelper;
   ref<T extends CollectionReference | DocumentReference>(r: T) {
     if (!r) {
       throw new Error('Reference need to be set');
