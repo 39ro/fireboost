@@ -1,0 +1,15 @@
+{
+  "extends": "./node_modules/gts/tsconfig-google.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "lib",
+    "lib": [
+      "es2016",
+      "dom"
+    ],
+    "traceResolution": false
+  },
+  "exclude": [
+    "test"
+  ]
+}
