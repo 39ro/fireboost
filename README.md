@@ -2,9 +2,9 @@
   <h1>Fireboost</h1>
 </div>
 
-![npm](https://img.shields.io/npm/v/admin-utils-firestore.svg)
-![Travis](https://img.shields.io/travis/39ro/admin-utils-firestore)
-![NPM](https://img.shields.io/npm/l/admin-utils-firestore)
+![npm](https://img.shields.io/npm/v/fireboost.svg)
+![Travis](https://img.shields.io/travis/39ro/fireboost)
+![NPM](https://img.shields.io/npm/l/fireboost)
 [![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
 
 <hr>
