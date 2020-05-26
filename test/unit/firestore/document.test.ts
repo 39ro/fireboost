@@ -1,5 +1,5 @@
 import * as firebaseTesting from '@firebase/testing';
-import { TestFirestoreAdminUtils } from './helpers-test';
+import { TestFirestoreAdminUtils } from '../../utils/firestore-test';
 
 const adminUtilsFirestore = new TestFirestoreAdminUtils();
 

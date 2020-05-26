@@ -1,6 +1,6 @@
 {
-  "name": "admin-utils-firestore",
-  "version": "0.1.6",
+  "name": "fireboost",
+  "version": "1.0.0",
   "description": "Unofficial library Node.js Utils class for Firestore (https://firebase.google.com/docs/firestore)",
   "license": "MIT",
   "author": "39ro <giovanni@apitech.agency>",
@@ -19,8 +19,8 @@
     "posttest": "npm run lint",
     "build": "tsc -p .",
     "clean": "rimraf lib && echo 'Cleaning build folder'",
-    "fix": "gts fix src/**",
-    "lint": "gts check src/**",
+    "fix": "gts fix",
+    "lint": "gts check",
     "test": "firebase emulators:exec --only firestore 'jest'",
     "test:watch": "jest --watch"
   },

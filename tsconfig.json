@@ -1,7 +1,7 @@
 {
   "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
-    "rootDir": "src",
+    "rootDir": "./",
     "outDir": "lib",
     "lib": [
       "es2016",
@@ -10,7 +10,6 @@
     "traceResolution": false
   },
   "exclude": [
-    "src/*.test.**",
-    "src/helpers-test.ts"
+    "test"
   ]
 }
