@@ -1,12 +1,12 @@
 {
   "name": "fireboost",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Unofficial library Node.js Utils class for Firestore (https://firebase.google.com/docs/firestore)",
   "license": "MIT",
   "author": "39ro <giovanni@apitech.agency>",
-  "repository": "github:39ro/admin-utils-firestore",
+  "repository": "github:39ro/fireboost",
   "bugs": {
-    "url": "https://github.com/39ro/admin-utils-firestore/issues"
+    "url": "https://github.com/39ro/fireboost/issues"
   },
   "main": "./lib/fireboost.js",
   "types": "./lib/fireboost.d.ts",
