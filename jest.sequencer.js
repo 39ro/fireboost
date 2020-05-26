@@ -1,8 +1,8 @@
 const TestSequencer = require('@jest/test-sequencer').default;
 
 const ORDER_PATH = [
-  'document',
-  'collection'
+  'unit',
+  'integration'
 ];
 
 class CustomSequencer extends TestSequencer {

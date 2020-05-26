@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Admin Utils Firestore</h1>
+  <h1>Fireboost</h1>
 </div>
 
 ![npm](https://img.shields.io/npm/v/admin-utils-firestore.svg)
@@ -9,31 +9,65 @@
 
 <hr>
 
-Helpers used for common admin task on Firestore databases.
+Helpers used for common admin tasks on Firebase (Authentication, Firestore).
 
 
 ### Installation:
 
-- Install the package via:
+- To install fireboost using npm, open a terminal/console window and enter the following command:
 ```
-$ npm install --save admin-utils-firestore
+ npm install --save fireboost
 ```
 
-- Init admin-utils-firestore via:
+- Init fireboost via:
 ```javascript
-import {FirestoreAdminUtils} from 'admin-utils-firestore';
-const adminUtilsFirestore = new FirestoreAdminUtils();
+import {FireBoost} from 'fireboost';
+
+const fireBoost = new FireBoost();
 ```
 
 <hr>
 
 ### Documentation:
 
+### Authentication
+Initializate fireboost with a Firebase App
+```javascript
+import * as admin from 'firebase-admin';
+import {FireBoost} from 'fireboost';
+
+const serviceAccount = require('./service-account.json');
+
+const app = admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "__YOUR__DATABASE_URL__"
+});
+
+const appAuthRef = new FireBoost().auth(app);
+```
+
+###### API
+
+- **deleteAllUsers**<br>
+_Delete all userRecors found in your Firebase App_
+```javascript
+appAuthRef.deleteAllUsers()
+    // teardown
+    .then(() => app.delete())
+    .catch(console.log);
+```
+
+
+
+
+### Firestore
+
+
 ##### Collections
 Target a firestore collection reference via:
 ```javascript
 const colRef = db.collection('test');
-const utilColRef = adminUtilsFirestore.ref(colRef);
+const utilColRef = fireBoost.ref(colRef);
 ```
 
 ###### API
@@ -61,7 +95,7 @@ utilColRef.renameFieldDocs({oldFieldKey: 'newFieldKey'})
 Target a firestore document reference via:
 ```javascript
 const docRef = db.collection('users').doc('xyz');
-const utilDocRef = adminUtilsFirestore.ref(docRef);
+const utilDocRef = fireBoost.ref(docRef);
 ```
 
 ###### API
@@ -81,4 +115,4 @@ This in a unofficial library for Firestore (https://firebase.google.com/docs/fir
 Thanks for using and testing this library!
 
 ### Contributing
-For bugs and feature requests please [Create an Issue](https://github.com/39ro/admin-utils-firestore/issues/new).
+For bugs and feature requests please [Create an Issue](https://github.com/39ro/fireboost/issues/new).

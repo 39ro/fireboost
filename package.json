@@ -1,15 +1,15 @@
 {
-  "name": "admin-utils-firestore",
-  "version": "0.1.6",
+  "name": "fireboost",
+  "version": "1.0.1",
   "description": "Unofficial library Node.js Utils class for Firestore (https://firebase.google.com/docs/firestore)",
   "license": "MIT",
   "author": "39ro <giovanni@apitech.agency>",
-  "repository": "github:39ro/admin-utils-firestore",
+  "repository": "github:39ro/fireboost",
   "bugs": {
-    "url": "https://github.com/39ro/admin-utils-firestore/issues"
+    "url": "https://github.com/39ro/fireboost/issues"
   },
-  "main": "./lib/helpers.js",
-  "types": "./lib/helpers.d.ts",
+  "main": "./lib/fireboost.js",
+  "types": "./lib/fireboost.d.ts",
   "scripts": {
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
@@ -17,10 +17,10 @@
     "prebuild": "npm run clean",
     "pretest": "npm run build",
     "posttest": "npm run lint",
-    "build": "tsc -p .",
+    "build": "tsc -p tsconfig.build.json",
     "clean": "rimraf lib && echo 'Cleaning build folder'",
-    "fix": "gts fix src/**",
-    "lint": "gts check src/**",
+    "fix": "gts fix",
+    "lint": "gts check",
     "test": "firebase emulators:exec --only firestore 'jest'",
     "test:watch": "jest --watch"
   },
