@@ -12,7 +12,7 @@
 Helpers used for common admin tasks on Firebase (Authentication, Firestore).
 
 
-### Installation:
+## Installation:
 
 - To install fireboost using npm, open a terminal/console window and enter the following command:
 ```
@@ -28,7 +28,7 @@ const fireBoost = new FireBoost();
 
 <hr>
 
-### Documentation:
+## Documentation:
 
 ### Authentication
 Initializate fireboost with a Firebase App
