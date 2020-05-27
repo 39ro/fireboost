@@ -34,7 +34,6 @@ const fireBoost = new FireBoost();
 Initializate fireboost with a Firebase App
 ```javascript
 import * as admin from 'firebase-admin';
-import {FireBoost} from 'fireboost';
 
 const serviceAccount = require('./service-account.json');
 
@@ -43,18 +42,17 @@ const app = admin.initializeApp({
     databaseURL: "__YOUR__DATABASE_URL__"
 });
 
-const appAuthRef = new FireBoost().auth(app);
+const appAuthRef = fireBoost.auth(app);
 ```
 
 ###### API
 
 - **deleteAllUsers**<br>
-_Delete all userRecors found in your Firebase App_
+_Delete all userRecords found in your Firebase App_
 ```javascript
 appAuthRef.deleteAllUsers()
-    // teardown
-    .then(() => app.delete())
-    .catch(console.log);
+// teardown
+.then(() => app.delete())
 ```
 
 

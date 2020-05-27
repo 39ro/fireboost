@@ -1,7 +1,7 @@
 import { firestore } from 'firebase-admin';
 import { FireBoost } from '../../src/fireboost';
 
-import { CollectionReferenceHelper } from '../../src/firestore';
+import { CollectionReferenceHelper, DocumentReferenceHelper } from '../../src/firestore';
 import * as admin from 'firebase-admin';
 
 let db: firestore.Firestore;
@@ -22,6 +22,6 @@ test('FireBoost().firestore().ref() as Collection', () => {
 });
 
 test('FireBoost().firestore().ref() as Document', () => {
-    const colRef = db.collection('test');
-    expect(new FireBoost().firestore().ref(colRef)).toBeInstanceOf(CollectionReferenceHelper);
+    const docRef = db.collection('test').doc('123');
+    expect(new FireBoost().firestore().ref(docRef)).toBeInstanceOf(DocumentReferenceHelper);
 });

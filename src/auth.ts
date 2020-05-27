@@ -7,6 +7,12 @@ export class FireBoostAuth {
     this.auth = app.auth();
   }
 
+  /*
+   * Delete all existing users found in initialized Firebase app
+   * appAuthRef.deleteAllUsers()
+   * // teardown
+   * .then(() => app.delete())
+   */
   async deleteAllUsers(nextPageToken?: string): Promise<void> {
     const listUsersResult = await this.auth.listUsers(10, nextPageToken);
     const usersID: string[] = listUsersResult.users.map(
@@ -18,7 +24,7 @@ export class FireBoostAuth {
 
     for (const uid of listUsers.usersID) {
       await this.auth.deleteUser(uid);
-      console.log('Deleted Auth User: ', uid);
+      console.log('Deleted user: ', uid);
     }
 
     if (listUsers.token) {
