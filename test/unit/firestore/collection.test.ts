@@ -1,7 +1,7 @@
 import * as firebaseTesting from '@firebase/testing';
-import { TestFirestoreAdminUtils } from '../../utils/firestore-test';
+import { TestFireBoostFirestore } from '../../utils/firestore-test';
 
-const adminUtilsFirestore = new TestFirestoreAdminUtils();
+const adminUtilsFirestore = new TestFireBoostFirestore();
 
 jest.mock('firebase-admin', () => {
   return {
@@ -13,7 +13,7 @@ jest.mock('firebase-admin', () => {
 
 const PROJECT_ID = `firestore-utils-project-${new Date().getTime()}`;
 
-let app;
+let app: firebase.app.App;
 let db: firebaseTesting.firestore.Firestore;
 
 beforeAll(async () => {
