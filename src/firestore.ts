@@ -137,7 +137,7 @@ export class CollectionReferenceHelper extends ReferenceHelper<
   }
 }
 
-export class FirestoreAdminUtils {
+export class FireBoostFirestore {
   ref(r: DocumentReference): DocumentReferenceHelper;
   ref(r: CollectionReference): CollectionReferenceHelper;
   ref<T extends CollectionReference | DocumentReference>(r: T) {

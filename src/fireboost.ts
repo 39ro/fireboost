@@ -1,4 +1,4 @@
-import { FirestoreAdminUtils } from './firestore';
+import { FireBoostFirestore } from './firestore';
 import { FireBoostAuth } from './auth';
 import * as admin from 'firebase-admin';
 
@@ -7,7 +7,7 @@ export class FireBoost {
     return new FireBoostAuth(app);
   }
 
-  firestore(): FirestoreAdminUtils {
-    return new FirestoreAdminUtils();
+  firestore(): FireBoostFirestore {
+    return new FireBoostFirestore();
   }
 }

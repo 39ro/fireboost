@@ -8,9 +8,9 @@ import {
 
 import TestCollectionReference = firebaseTesting.firestore.CollectionReference;
 import TestDocumentReference = firebaseTesting.firestore.DocumentReference;
-import { CollectionReferenceHelper, DocumentReferenceHelper, FirestoreAdminUtils } from '../../src/firestore';
+import { CollectionReferenceHelper, DocumentReferenceHelper, FireBoostFirestore } from '../../src/firestore';
 
-export class TestFirestoreAdminUtils implements FirestoreAdminUtils {
+export class TestFireBoostFirestore implements FireBoostFirestore {
     ref(r: TestDocumentReference): DocumentReferenceHelper;
     ref(r: TestCollectionReference): CollectionReferenceHelper;
     ref(r: DocumentReference): DocumentReferenceHelper;

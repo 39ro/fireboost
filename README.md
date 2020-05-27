@@ -1,18 +1,18 @@
 <div align="center">
-  <h1>Fireboost</h1>
+  <h1>FireBoost</h1>
 </div>
 
-![npm](https://img.shields.io/npm/v/fireboost.svg)
-![Travis](https://img.shields.io/travis/39ro/fireboost)
+[![npm](https://img.shields.io/npm/v/fireboost.svg)](https://www.npmjs.com/package/fireboost)
+[![Travis](https://img.shields.io/travis/39ro/fireboost)](https://travis-ci.com/github/39ro/fireboost)
 ![NPM](https://img.shields.io/npm/l/fireboost)
 [![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
 
 <hr>
 
-Helpers used for common admin tasks on Firebase (Authentication, Firestore).
+A library including methods to `boost` your development with Firebase (Authentication, Firestore).
 
 
-### Installation:
+## Installation:
 
 - To install fireboost using npm, open a terminal/console window and enter the following command:
 ```
@@ -28,13 +28,12 @@ const fireBoost = new FireBoost();
 
 <hr>
 
-### Documentation:
+## Documentation:
 
 ### Authentication
 Initializate fireboost with a Firebase App
 ```javascript
 import * as admin from 'firebase-admin';
-import {FireBoost} from 'fireboost';
 
 const serviceAccount = require('./service-account.json');
 
@@ -43,18 +42,17 @@ const app = admin.initializeApp({
     databaseURL: "__YOUR__DATABASE_URL__"
 });
 
-const appAuthRef = new FireBoost().auth(app);
+const appAuthRef = fireBoost.auth(app);
 ```
 
 ###### API
 
 - **deleteAllUsers**<br>
-_Delete all userRecors found in your Firebase App_
+_Delete all userRecords found in your Firebase App_
 ```javascript
 appAuthRef.deleteAllUsers()
-    // teardown
-    .then(() => app.delete())
-    .catch(console.log);
+// teardown
+.then(() => app.delete())
 ```
 
 
@@ -111,7 +109,7 @@ utilDocRef.renameField({oldFieldKey: 'newFieldKey'})
 
 
 ### Just a reminder
-This in a unofficial library for Firestore (https://firebase.google.com/docs/firestore) we recommend replicating the operation, where it's possible, in a test project to check if the output is what expected before to run any operation in a production environment.
+This in a unofficial library for Firebase (Authentication, Firestore) we recommend replicating the operation, where it's possible, in a test project to check if the output is what expected before to run any operation in a production environment.
 Thanks for using and testing this library!
 
 ### Contributing
