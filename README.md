@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Fireboost</h1>
+  <h1>FireBoost</h1>
 </div>
 
 [![npm](https://img.shields.io/npm/v/fireboost.svg)](https://www.npmjs.com/package/fireboost)
